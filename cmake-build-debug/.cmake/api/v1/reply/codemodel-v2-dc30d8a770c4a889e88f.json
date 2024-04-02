@@ -1,0 +1,87 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.28"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "c__",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "cdc::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-cdc-Debug-f4d68a72e59671325860.json",
+					"name" : "cdc",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dp-Debug-d6ab2314467600937bd7.json",
+					"name" : "dp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gen-Debug-e6b925133086f1cb9fc4.json",
+					"name" : "gen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "t::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-t-Debug-c67a53b17f71dd3ad8d1.json",
+					"name" : "t",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/DELLPC/Desktop/code/c++/cmake-build-debug",
+		"source" : "C:/Users/DELLPC/Desktop/code/c++"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}
