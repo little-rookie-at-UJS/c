@@ -1,0 +1,84 @@
+template<typename T, typename _Compare = less<>>
+struct MySet {
+    priority_queue<T, vector<T>, _Compare> p{};
+    priority_queue<T, vector<T>, _Compare> ep{};
+    int sum;
+
+    MySet() {
+        sum = 0;
+    }
+
+    void insert(int x) {
+        p.emplace(x);
+        sum += x;
+    }
+
+    void erase(int x) {
+        ep.emplace(x);
+        sum -= x;
+    }
+
+    bool empty() {
+        return size() == 0;
+    }
+
+    int top() {
+        while (!p.empty() && !ep.empty() && p.top() == ep.top()) {
+            p.pop();
+            ep.pop();
+        }
+        return p.top();
+    }
+
+    void pop() {
+        erase(p.top());
+    }
+
+    int size() {
+        return p.size() - ep.size();
+    }
+};
+
+struct MidNum {
+    MySet<int, greater<>> r{};
+    MySet<int> l{};
+
+
+    void adjust() {
+        // debug(r.size(), l.size());
+        while (r.size() > l.size()) {
+            l.insert(r.top());
+            r.pop();
+        }
+        while (!l.empty() && l.size() - 1 > r.size()) {
+            r.insert(l.top());
+            l.pop();
+        }
+    }
+
+    void insert(int x) {
+        if (l.empty()||l.top() > x)
+            l.insert(x);
+        else {
+            r.insert(x);
+        }
+        adjust();
+    }
+
+    void erase(int x) {
+        if (l.top() >= x) {
+            l.erase(x);
+        }
+        else {
+            r.erase(x);
+        }
+
+        adjust();
+    }
+
+    int opsum() {
+        int sums = r.sum - l.sum;
+        if (l.size() > r.size()) sums += l.top();
+        return sums;
+    }
+};

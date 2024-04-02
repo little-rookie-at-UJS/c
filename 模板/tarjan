@@ -1,0 +1,62 @@
+  vector<int> ans(n + 1);
+    // 原图
+    vector<vector<int>> mp(n + 1);
+    vector<int> dfn(n + 1, 0);
+    vector<int> low(n + 1, 0);
+    vector<int> belongs(n + 1, 0);
+    vector<int> vis(n + 1, 0);
+    vector<int> size(n + 1, 0);
+    vector<int> values(n + 1, 0);
+    vector<int> ttt(n + 1, 1);
+    int k = 1;
+    int t = 1;
+    vector<int> v;
+    function<void(int)> tarjan = [&](int x) {
+        ttt[x] = 0;
+        dfn[x] = low[x] = t++;
+        v.emplace_back(x);
+        vis[x] = 1;
+        for (auto i: mp[x]) {
+            if (!dfn[i]) {
+                tarjan(i);
+                low[x] = min(low[x], low[i]);
+            }
+            if (vis[i]) low[x] = min(low[x], dfn[i]);
+        }
+        if (dfn[x] == low[x]) {
+            belongs[x] = k;
+            while (!v.empty()) {
+                int a = v.back();
+                belongs[a] = k;
+                size[k]++;
+                values[k] += ans[a];
+                vis[a] = 0;
+                v.pop_back();
+                if (a == x) break;
+            }
+            k++;
+        }
+    };
+    for (int i = 1; i <= n; i++) {
+        cin >> ans[i];
+    }
+    for (int i = 0; i < m; i++) {
+        int x, y;
+        cin >> x >> y;
+        mp[x].emplace_back(y);
+    }
+    for (int i = 1; i <= n; i++)
+        if (!dfn[i]) tarjan(i);
+    // for (int i = 1; i <= n; i++) cout << belongs[i] << endl;
+    vector<set<int>> mp2(k + 10);
+    vector<int> du(k + 10, 0);
+    for (int i = 1; i <= n; i++) {
+        int f = belongs[i];
+        for (auto j: mp[i]) {
+            int t = belongs[j];
+            if (f == t) continue;
+            if (mp2[f].find(t) != mp2[f].end())continue;
+            mp2[f].emplace(t);
+            du[t]++;
+        }
+    }
