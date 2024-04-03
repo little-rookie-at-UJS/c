@@ -58,7 +58,6 @@ void solve() {
     cin >> n;
     map<int, priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>>> mp;
     vector<vector<pair<int, int>>> valus(n + 1);
-
     vector<int> du(n + 1);
     for (int i = 1; i <= n; i++) {
         int m;
@@ -92,15 +91,12 @@ void solve() {
             auto [i, j] = st.top();
             st.pop();
             ans[i] += j;
-//            debug(ans[i]);
             while (!mp[i].empty()) {
                 auto [va, vb] = mp[i].top();
                 if (va <= ans[i]) {
-//                    debug(vb);
                     mp[i].pop();
                     du[vb]--;
                     if (du[vb] == 0) {
-
                         complate.emplace(vb);
                     }
                 } else break;
