@@ -37,7 +37,6 @@ void init() {
 //2 4
 void solve() {
     int n, m;
-    cin >> n >> m;
 
 }
 
