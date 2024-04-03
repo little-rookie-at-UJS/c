@@ -11,7 +11,6 @@ using namespace std;
 #define debug_assert(...) 42
 #endif
 
-
 #define IOS ios::sync_with_stdio(0),cin.tie(0)
 
 using ll = long long;
