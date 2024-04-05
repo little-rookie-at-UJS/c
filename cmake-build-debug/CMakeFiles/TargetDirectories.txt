@@ -1,6 +1,0 @@
-C:/Users/DELLPC/Desktop/code/c++/cmake-build-debug/CMakeFiles/cdc.dir
-C:/Users/DELLPC/Desktop/code/c++/cmake-build-debug/CMakeFiles/t.dir
-C:/Users/DELLPC/Desktop/code/c++/cmake-build-debug/CMakeFiles/dp.dir
-C:/Users/DELLPC/Desktop/code/c++/cmake-build-debug/CMakeFiles/gen.dir
-C:/Users/DELLPC/Desktop/code/c++/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/DELLPC/Desktop/code/c++/cmake-build-debug/CMakeFiles/rebuild_cache.dir
