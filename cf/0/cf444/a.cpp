@@ -25,8 +25,6 @@ using VII = vector<VI>;
 using PII = pair<int, int>;
 const int inf = 1e18;
 const int mod = 1e9 + 7;
-template<typename T, typename Compare =less<>>
-using pqinit = priority_queue<T, vector<T>, Compare>;
 
 void init() {
 }
@@ -34,7 +32,21 @@ void init() {
 
 void solve() {
 
+    int n, m;
+    cin >> n >> m;
+    vector<int> a(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    vector<tuple<int, int, int>> b;
+    double maxs = 0;
+    for (int i = 0; i < m; i++) {
+        int x, y, z;
+        cin >> x >> y >> z;
 
+        maxs = max(maxs, (double) (a[x] + a[y]) / (double) z );
+    }
+    cout << fixed << setprecision(20) << maxs << endl;
 }
 
 signed main() {
@@ -42,7 +54,7 @@ signed main() {
     init();
     // debug(1);
     int t = 1;
-    cin >> t;
+//    cin >> t;
     while (t--) {
         solve();
     }

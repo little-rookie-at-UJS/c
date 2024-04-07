@@ -33,8 +33,23 @@ void init() {
 
 
 void solve() {
-
-
+    string s;
+    int n;
+    cin >> n;
+    cin >> s;
+//    int n = s.size();
+    vector<int> ans;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '1') ans.emplace_back(i);
+    }
+    if (ans.size() % 2) cout << "NO" << endl;
+    else {
+        if(!ans.empty() && ans[0] - ans[ans.size()/2] ==-1) {
+            cout << "NO" << endl;
+        }else {
+            cout << "YES" << endl;
+        }
+    }
 }
 
 signed main() {

@@ -1,0 +1,44 @@
+
+
+namespace strhash {
+    using u64 = uint64_t;
+    mt19937_64 rng(random_device{}());
+    const int base = 135 + rng() % 114514;
+    constexpr int p1 = 1'0000'0000'7, p2 = 1'0000'0000'9;
+    constexpr unsigned msk32 = ~(0u);
+
+    vector<u64> pw1{1}, pw2{1};
+
+    class StringHash {
+        vector<u64> h;
+        int n;
+    public:
+        StringHash(const string &s) : n(s.length()) {
+            int old_size = pw1.size();
+            if (old_size < n + 1) {
+                pw1.resize(2 * n + 1, 1), pw2.resize(2 * n + 1, 1);
+                for (int i = old_size; i <= 2 * n; i++) {
+                    pw1[i] = pw1[i - 1] * base % p1;
+                    pw2[i] = pw2[i - 1] * base % p2;
+                }
+            }
+            u64 now1 = 0, now2 = 0;
+            h.resize(n + 1, 0);
+            for (int i = n - 1; i >= 0; i--) {
+                now1 = (now1 * base + s[i]) % p1;
+                now2 = (now2 * base + s[i]) % p2;
+                h[i] = (now1 << 32) | now2;
+            }
+        }
+
+        u64 get(int l, int r) {
+            int len = r - l;
+            u64 l1 = h[l] >> 32, r1 = h[r] >> 32;
+            u64 l2 = h[l] & msk32, r2 = h[r] & msk32;
+            u64 res1 = (l1 - r1 * pw1[len] % p1 + p1) % p1;
+            u64 res2 = (l2 - r2 * pw2[len] % p2 + p2) % p2;
+            return (res1 << 32) | res2;
+        }
+    };
+
+}  // namespace strhash

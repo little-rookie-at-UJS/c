@@ -33,8 +33,22 @@ void init() {
 
 
 void solve() {
+    int n, k;
+    cin >> n >> k;
 
-
+    if (n % k == 0) {
+        cout << "YES" << endl;
+        cout << 1 << endl;
+        cout << n / k << endl;
+    } else {
+        int ans = n + 1 - k;
+        if (ans <= 0 || n / ans >= 2) cout << "NO" << endl;
+        else {
+            cout << "YES" << endl;
+            cout << 2 << endl;
+            cout << ans<<" "<< 1 << endl;
+        }
+    }
 }
 
 signed main() {
