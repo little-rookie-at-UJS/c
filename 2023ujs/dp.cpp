@@ -4,11 +4,11 @@ using namespace std;
 
 #ifndef ONLINE_JUDGE
 #include "test.h"
-#include "dbg.h"
 #else
 #define debug(...) 42
 #define debug_assert(...) 42
 #endif
+
 
 #define IOS ios::sync_with_stdio(0),cin.tie(0)
 
@@ -23,110 +23,83 @@ using VII = vector<VI>;
 using PII = pair<int, int>;
 const int inf = 1e18;
 const int mod = 998244353;
+const int maxn = 1e6 + 7;
 
-void init() {
+int qpow(int a, int b) {
+    int ans = 1;
+    while (b) {
+        // debug(b);
+        if (b & 1) {
+            ans *= a;
+            ans %= mod;
+        }
+        a *= a;
+        a %= mod;
+        b /= 2;
+    }
+    return ans;
 }
 
+int fac[maxn];
+int infac[maxn];
+int f[maxn][21];
+int C(int n, int m) {
+    if (n - m < 0) return 0;
+    if (m == 0 || n == 0 || m - n == 0)return 1;
+    return fac[n] * infac[m] % mod * infac[n - m] % mod;
+}
+
+void init() {
+    fac[0] = 1;
+    for (int i = 1; i < maxn; i++) {
+        fac[i] = i * fac[i - 1];
+        fac[i] %= mod;
+    }
+    infac[0] = 1;
+    infac[maxn - 1] = qpow(fac[maxn - 1], mod - 2);
+    for (int i = maxn - 2; i; i--) {
+        infac[i] = (i + 1) * infac[i + 1];
+        infac[i] %= mod;
+    }
+    int k = 21;
+    f[0][0] = 1;
+    int maxs = 1;
+    for (int i = 1; i < maxn; i++) {
+        if ((1 << maxs) <= i) {
+            maxs++;
+        }
+        f[i][0] = 1;
+        int jj = (i - (1 << (maxs - 1)));
+        for (int j = 1; j < k; j++) {
+            f[i][j] = C(maxs - 1, j - 1) + f[jj][j];
+        }
+    }
+    for (int i = 1; i < maxn; i++) {
+        for (int j = 2; j < k; j++) {
+            f[i][j] += f[i][j - 1];
+
+        }
+    }
+    for (int i = 2; i < maxn; i++) {
+        for (int j = 1; j < k; j++) {
+            f[i][j] += f[i - 1][j];
+            f[i][j] %= mod;
+        }
+    }
+}
 
 void solve() {
     int n, k;
     cin >> n >> k;
-    vector<int> ys(k + 10), nex(k + 10), val(k + 10);
-    VII mp(n + 1);
-    for (int i = 1; i < n; i++) {
-        int u, v;
-        cin >> u >> v;
-        mp[u].emplace_back(v);
-        mp[v].emplace_back(u);
-    }
-    function<vector<pair<int,int>>(int,int)> dfs = [&](int f,int l) {
-        vector<PII> dp = {{1, 1}};
-        int len = 1;
-        for (auto i: mp[l]) {
-            if (i == f)continue;
-            auto ans = dfs(l, i);
-            for (auto [l1,v1]: dp) {
-                for (auto [l2,v2]: ans) {
-                    if (l1 + l2 <= k + 1) {
-                        if (!ys[l1 + l2]) {
-                            ys[l1 + l2] = len;
-                            nex[len] = l1 + l2;
-                            len++;
-                        }
-                        val[ys[l1 + l2]] = (val[ys[l1 + l2]] + (v1 * v2) % mod) % mod;
-                    }
-                }
-            }
-            vector<PII> mdp;
-            for (int j = 1; j < len; j++) {
-                mdp.emplace_back(nex[j], val[j]);
-                val[j] = 0;
-                ys[nex[j]] = 0;
-                nex[j] = 0;
-            }
-            len = 1;
-            dp = mdp;
-        }
-        int n0 = -1, nk = -1, nkk = -1;
-        for (int i = 0; i < dp.size(); i++) {
-            if (dp[i].first == 0) {
-                n0 = i;
-            }
-            else if (dp[i].first == k) {
-                nk = i;
-            }
-            else if (dp[i].first == k + 1) {
-                nkk = i;
-            }
-        }
-        if (nk != -1 || nkk != -1) {
-            if (n0 == -1) {
-                dp.emplace_back(0, 0);
-                n0 = dp.size() - 1;
-            }
-            dp[n0].second = ((dp[n0].second + ((nk == -1)
-                                                   ? 0ll
-                                                   : dp[nk].second) +
-                              ((nkk == -1)
-                                   ? 0ll
-                                   : dp[nkk].second))) % mod;
-        }
-        if (nkk != -1) {
-            swap(dp[nkk], dp.back());
-            dp.pop_back();
-        }
-        debug(l, dp);
-        return dp;
-    };
-    auto ans = dfs(0, 1);
-    debug(ans);
-    for (auto [i,j]: ans) {
-        if (i == 0) {
-            cout << j << endl;
-            return;
-        }
-    }
-    cout << 0 << endl;
+    cout << f[n][k] << endl;
 }
+
 signed main() {
     IOS;
     init();
-    // debug(1);
     int t = 1;
     cin >> t;
     while (t--) {
         solve();
     }
 }
-
-// 11 1
-//  11 10
-//  1 4
-//  9 10
-//  8 4
-//  3 6
-//  5 7
-//  6 1
-//  10 2
-//  11 7
-//  11 1
