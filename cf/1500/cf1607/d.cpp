@@ -61,6 +61,7 @@ void solve() {
             return;
         }
     }
+
     for (int i = 0; i < blue.size(); i++) {
         if (blue[i] < (i + 1)) {
             cout << "NO" << endl;
