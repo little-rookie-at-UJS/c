@@ -78,7 +78,6 @@ struct PAM {
         n.len = len;
         n.c = cc;
         tree.emplace_back(n);
-
         return tree.size() - 1;
     }
 

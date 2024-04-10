@@ -184,6 +184,42 @@ build gen.exe: CXX_EXECUTABLE_LINKER__gen_Debug CMakeFiles/gen.dir/gen.cpp.obj
   TARGET_IMPLIB = libgen.dll.a
   TARGET_PDB = gen.pdb
 
+# =============================================================================
+# Object build statements for EXECUTABLE target D
+
+
+#############################################
+# Order-only phony target for D
+
+build cmake_object_order_depends_target_D: phony || CMakeFiles/D.dir
+
+build CMakeFiles/D.dir/ICPC/taipei2021/D.cpp.obj: CXX_COMPILER__D_unscanned_Debug C$:/Users/DELLPC/Desktop/code/c++/ICPC/taipei2021/D.cpp || cmake_object_order_depends_target_D
+  DEP_FILE = CMakeFiles\D.dir\ICPC\taipei2021\D.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\D.dir
+  OBJECT_FILE_DIR = CMakeFiles\D.dir\ICPC\taipei2021
+  TARGET_COMPILE_PDB = CMakeFiles\D.dir\
+  TARGET_PDB = D.pdb
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target D
+
+
+#############################################
+# Link the executable D.exe
+
+build D.exe: CXX_EXECUTABLE_LINKER__D_Debug CMakeFiles/D.dir/ICPC/taipei2021/D.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\D.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_COMPILE_PDB = CMakeFiles\D.dir\
+  TARGET_FILE = D.exe
+  TARGET_IMPLIB = libD.dll.a
+  TARGET_PDB = D.pdb
+
 
 #############################################
 # Utility command for edit_cache
@@ -210,6 +246,8 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
+build D: phony D.exe
+
 build cdc: phony cdc.exe
 
 build dp: phony dp.exe
@@ -226,7 +264,7 @@ build t: phony t.exe
 #############################################
 # Folder: C:/Users/DELLPC/Desktop/code/c++/cmake-build-debug
 
-build all: phony cdc.exe t.exe dp.exe gen.exe
+build all: phony cdc.exe t.exe dp.exe gen.exe D.exe
 
 # =============================================================================
 # Built-in targets

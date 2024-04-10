@@ -8,3 +8,5 @@ add_executable(t t.cpp)
 add_executable(dp dp.cpp)
 add_executable(gen gen.cpp)
 
+
+add_executable(D ICPC/taipei2021/D.cpp)
