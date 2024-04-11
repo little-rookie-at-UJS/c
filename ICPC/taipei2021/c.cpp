@@ -18,117 +18,127 @@ using ll = long long;
 using ull = unsigned long long;
 
 #define endl '\n'
-#define int ll
+//#define int ll
 
 using VI = vector<int>;
 using VII = vector<VI>;
 using PII = pair<int, int>;
-const int inf = 1e18;
-const int mod = 1e9 + 7;
+//const int inf = 1e18;
+//const int mod = 1e9 + 7;
 template<typename T, typename Compare =less<>>
 using pqinit = priority_queue<T, vector<T>, Compare>;
 
 void init() {
 }
 
-// 12 10
-// 1 Jessica 5 10
-// 1 Sara 4 7
-// 1 Peter 7 9
-// 2 3 5
-// 2 3 7
-// 1 Olivia 4 6
-// 2 1 3
-// 2 8 8
-// 2 8 9
-// 2 3 11
-
-void solve() {
-    int n, q;
-    cin >> n >> q;
-    vector<priority_queue<int>> _sg(4 * n), lazy(4 * n);
-
-    map<int, string> ans;
-    ans[0] = ">_<";
-    set<int> s;
-    auto addlazy = [&](int q, int x) {
-        _sg[q].emplace(x);
-        lazy[q].emplace(x);
+class STG {
+    struct node {
+        priority_queue<int> part, all;
+        int l, r;
     };
+    set<int> er;
+    vector<node> tr;
 
-    auto update = [&](int q) {
-        while (!_sg[q].empty() && s.count(_sg[q].top())) {
-            _sg[q].pop();
-        }
-    };
-    auto push = [&](int q) {
-        update(q);
-        while (!lazy[q].empty()) {
-            int x = lazy[q].top();
-            lazy[q].pop();
-            addlazy(q << 1, x);
-            addlazy(q << 1 | 1, x);
-        }
-    };
-
-    function<void(int, int, int, int, int, int)> add = [&](int q, int a, int l, int r, int L, int R) {
-        update(q);
-        if (L <= l && r <= R) {
-            addlazy(q, a);
+    void build(int u, int l, int r) {
+        tr[u].l = l;
+        tr[u].r = r;
+        if (l == r) {
             return;
         }
-        if (l > R || r < L) return;
-        push(q);
-        _sg[q].emplace(a);
-        int mid = (l + r) / 2;
-        if (mid >= L) {
-            add(q << 1, a, l, mid, L, R);
-        }
-        if (mid < R) {
-            add(q << 1 | 1, a, mid + 1, r, L, R);
-        }
-    };
-    function<int(int, int, int, int, int)> query = [&](int q, int l, int r, int L, int R) {
-        update(q);
-        if (L <= l && r <= R) {
-            if (!_sg[q].empty()) {
-                return _sg[q].top();
-            }
-            return 0ll;
-        }
-        if (l > R || r < L) return 0ll;
-        push(q);
-        int mid = (l + r) / 2;
-        int ans = 0;
-        if (mid >= L) {
-            ans = max(query(q << 1, l, mid, L, R), ans);
-        }
-        if (mid < R) {
-            ans = max(query(q << 1 | 1, mid + 1, r, L, R), ans);
-        }
-        return ans;
-    };
+        int mid = (l + r) >> 1;
+        build(u << 1, l, mid);
+        build(u << 1 | 1, mid + 1, r);
+    }
 
-    for (int i = 1; i <= q; i++) {
-//        debug(i);
-        int x;
-        cin >> x;
-        if (x == 1) {
-            string st;
+    void update(int q) {
+        while (!tr[q].part.empty() && er.count(tr[q].part.top())) {
+            tr[q].part.pop();
+        }
+        while (!tr[q].all.empty() && er.count(tr[q].all.top())) {
+            tr[q].all.pop();
+        }
+    }
+
+public:
+    STG(int n) : tr(n << 2) {
+        build(1, 1, n);
+    }
+
+    void insert(int u, int l, int r, int x) {
+        update(u);
+        tr[u].part.push(x);
+        if (tr[u].l >= l && tr[u].r <= r) {
+            tr[u].all.push(x);
+            return;
+        }
+        if (l > tr[u].r || r < tr[u].l)return;
+        int mid = (tr[u].l + tr[u].r) >> 1;
+        if (l <= mid) insert(u << 1, l, r, x);
+        if (r > mid) insert(u << 1 | 1, l, r, x);
+    }
+
+    int query(int u, int l, int r) {
+        update(u);
+        if (tr[u].l >= l && tr[u].r <= r) {
+            if (!tr[u].part.empty()) return tr[u].part.top();
+            else return 0;
+        }
+        if (l > tr[u].r || r < tr[u].l)return 0;
+        int mid = (tr[u].l + tr[u].r) >> 1;
+        int ans = 0;
+        if (l <= mid) ans = query(u << 1, l, r);
+        if (r > mid) ans = max(ans, query(u << 1 | 1, l, r));
+        if (!tr[u].all.empty())
+            ans = max(ans, tr[u].all.top());
+        return ans;
+    }
+
+    void erase(int x) {
+        er.insert(x);
+    }
+};
+
+//12 10
+//1 Jessica 5 10
+//1 Sara 4 7
+//1 Peter 7 9
+//2 3 5
+//2 3 7
+//1 Olivia 4 6
+//2 1 3
+//2 8 8
+//2 8 9
+//2 3 11
+void solve() {
+    int n, m;
+    cin >> n >> m;
+    STG stg(n);
+    map<int, string> mp;
+    mp[0] = ">_<";
+    for (int i = 1; i <= m; i++) {
+        int op;
+        cin >> op;
+        if (op == 1) {
+            string s;
             int l, r;
-            cin >> st >> l >> r;
-            ans[i] = st;
-//            debug("add", i, l, r);
-            add(1, i, 1, n, l, r);
+            cin >> s >> l >> r;
+            mp[i] = s;
+            l++;
+            r++;
+            stg.insert(1, l, r, i);
         } else {
             int l, r;
             cin >> l >> r;
-            int mins = query(1, 1, n, l, r);
-            debug(mins);
-            cout << ans[mins] << endl;
-            s.insert(mins);
+            l++;
+            r++;
+            int ans = stg.query(1, l, r);
+            stg.erase(ans);
+            cout << mp[ans] << endl;
         }
     }
+
+
+    cout << endl;
 }
 
 signed main() {
