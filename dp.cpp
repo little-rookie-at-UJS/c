@@ -7,7 +7,7 @@ int main() {
     // 当然，这段程序也可以改写成批处理的形式
     while (true) {
         system("gen > test.in");  // 数据生成器将生成数据写入输入文件
-        system("main.exe < test.in > a.out");  // 获取程序1输出
+        system("cdc.exe < test.in > a.out");  // 获取程序1输出
         system("t.exe < test.in > b.out");  // 获取程序2输出
         if (system("fc a.out b.out")) {
             // 该行语句比对输入输出

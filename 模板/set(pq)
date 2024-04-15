@@ -3,25 +3,20 @@ struct MySet {
     priority_queue<T, vector<T>, _Compare> p{};
     priority_queue<T, vector<T>, _Compare> ep{};
     int sum;
-
     MySet() {
         sum = 0;
     }
-
     void insert(int x) {
         p.emplace(x);
         sum += x;
     }
-
     void erase(int x) {
         ep.emplace(x);
         sum -= x;
     }
-
     bool empty() {
         return size() == 0;
     }
-
     int top() {
         while (!p.empty() && !ep.empty() && p.top() == ep.top()) {
             p.pop();
@@ -29,11 +24,9 @@ struct MySet {
         }
         return p.top();
     }
-
     void pop() {
         erase(p.top());
     }
-
     int size() {
         return p.size() - ep.size();
     }

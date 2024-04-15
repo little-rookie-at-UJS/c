@@ -20,7 +20,6 @@ using ull = unsigned long long;
 #define endl '\n'
 #define int ll
 
-
 using VI = vector<int>;
 using VII = vector<VI>;
 using PII = pair<int, int>;
@@ -66,18 +65,18 @@ void solve() {
     }
     auto cal = [&](int x, int y) {
         if (x > y) swap(x, y);
-//        debug(x, y, nex[x], pre[y]);
+        debug(x, y, nex[x], pre[y]);
         if ( pre[y] >= x) return y - x;
         int res = inf;
         if (pre[x]) {
             res = min(res, x + y - (pre[x] * 2));
-//            debug(res, x, y, pre[x] );
+            debug(res, x, y, pre[x] );
 
         }
 
         if (nex[y]) {
             res = min(res, (nex[y] * 2) - x - y);
-//            debug(res, x, y, nex[y]);
+            debug(res, x, y, nex[y]);
         }
         return res;
     };

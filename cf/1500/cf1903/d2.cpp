@@ -1,52 +1,60 @@
-#include "bits/stdc++.h"
+#include<bits/stdc++.h>
 
 using namespace std;
 
-#ifndef ONLINE_JUDGE
+#define Reimu inline void // 灵梦赛高
+#define Marisa inline int // 魔理沙赛高
+#define Sanae inline bool // 早苗赛高
 
-#include "test.h"
+typedef long long LL;
+typedef unsigned long long ULL;
 
-#else
-#define debug(...) 42
-#define debug_assert(...) 42
-#endif
+typedef pair<int, int> Pii;
+typedef tuple<int, int, int> Tiii;
+#define fi first
+#define se second
 
+const int N = 200010;
 
-#define IOS ios::sync_with_stdio(0),cin.tie(0)
+int n, m;
+int pr[N], nx[N], f[N], l[N], r[N];
+LL dp[N][2];
 
-using ll = long long;
-using ull = unsigned long long;
-
-#define endl '\n'
-#define int ll
-
-using VI = vector<int>;
-using VII = vector<VI>;
-using PII = pair<int, int>;
-const int inf = 1e18;
-const int mod = 1e9 + 7;
-template<typename T, typename Compare =less<>>
-using pqinit = priority_queue<T, vector<T>, Compare>;
-
-void init() {
-}
-//4 2
-//1 3 7 5
-//2
-//10
-
-void solve() {
-
-
+Marisa calc(int x, int y) {
+    if (x > y) swap(x, y);
+    if (pr[y] >= x) return y - x;
+    int res = INT_MAX;
+    if (pr[x]) res = min(res, x + y - (pr[x] << 1));
+    if (nx[y]) res = min(res, (nx[y] << 1) - x - y);
+    return res;
 }
 
-signed main() {
-    IOS;
-    init();
-    // debug(1);
-    int t = 1;
-//    cin >> t;
-    while (t--) {
-        solve();
+int main() {
+    ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
+    int c1, c2; cin >> n >> m >> c1 >> c2;
+    n = m = 0;
+    for (int i = 1, x, y; i <= c1; ++i) {
+        cin >> x >> y;
+        n = max(n, x); m = max(m, y);
+        l[x] = l[x] ? min(l[x], y) : y;
+        r[x] = r[x] ? max(r[x], y) : y;
     }
+    if (!l[1]) l[1] = r[1] = 1;
+    for (int i = 1, x; i <= c2; ++i) cin >> x, m = max(m, x), f[x] = 1;
+    for (int i = 1; i <= m; ++i) pr[i] = f[i] ? i : pr[i - 1];
+    for (int i = m; i; --i) nx[i] = f[i] ? i : nx[i + 1];
+    dp[1][0] = r[1] - 1 + r[1] - l[1]; dp[1][1] = r[1] - 1;
+    for (int i = 1; i < n; ++i) {
+        if (!l[i + 1]) {
+            l[i + 1] = l[i]; r[i + 1] = r[i]; dp[i + 1][0] = dp[i][0], dp[i + 1][1] = dp[i][1];
+            continue;
+        }
+        dp[i + 1][0] = min(dp[i][0] + calc(l[i], l[i + 1]), dp[i][1] + calc(r[i], l[i + 1]));
+        dp[i + 1][1] = min(dp[i][0] + calc(l[i], r[i + 1]), dp[i][1] + calc(r[i], r[i + 1]));
+        swap(dp[i + 1][0], dp[i + 1][1]);
+        dp[i + 1][0] += r[i + 1] - l[i + 1];
+        dp[i + 1][1] += r[i + 1] - l[i + 1];
+    }
+    cout << min(dp[n][0], dp[n][1]) + n - 1;
+    return 0;
 }
