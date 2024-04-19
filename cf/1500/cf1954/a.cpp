@@ -32,10 +32,14 @@ void init() {
 }
 
 
-const int maxs = 2e5 + 5;
-
 void solve() {
-
+    int n, m, k;
+    cin >> n >> m >> k;
+    if ((n + m - 1) / m + k >= n) {
+        cout << "No" << endl;
+    } else {
+        cout << "Yes" << endl;
+    }
 }
 
 signed main() {
@@ -43,7 +47,7 @@ signed main() {
     init();
     // debug(1);
     int t = 1;
-//    cin >> t;
+    cin >> t;
     while (t--) {
         solve();
     }

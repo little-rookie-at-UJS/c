@@ -32,9 +32,25 @@ void init() {
 }
 
 
-const int maxs = 2e5 + 5;
-
 void solve() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    int las = -1;
+    int ans = n;
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+        if (a[i] != a[0]) {
+            ans = min(ans, i - 1 - las);
+            las = i;
+        }
+    }
+    ans = min(ans, n - 1 - las);
+    if (ans == n) {
+        cout << "-1" << endl;
+    } else {
+        cout << ans << endl;
+    }
 
 }
 
@@ -43,7 +59,7 @@ signed main() {
     init();
     // debug(1);
     int t = 1;
-//    cin >> t;
+    cin >> t;
     while (t--) {
         solve();
     }

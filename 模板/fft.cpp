@@ -25,20 +25,20 @@ using VII = vector<VI>;
 using PII = pair<int, int>;
 const int inf = 1e18;
 const int mod = 1e9 + 7;
+template<typename T, typename Compare =less<>>
+using pqinit = priority_queue<T, vector<T>, Compare>;
 
 void init() {
 }
 
-//4 4
-//aaab
-//1 4
-//1 3
-//3 4
-//2 4
+
 void solve() {
-    int n, m;
+
 
 }
+
+
+
 
 signed main() {
     IOS;

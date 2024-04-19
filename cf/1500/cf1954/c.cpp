@@ -32,9 +32,26 @@ void init() {
 }
 
 
-const int maxs = 2e5 + 5;
-
 void solve() {
+    string s1, s2;
+    cin >> s1 >> s2;
+    int n = s1.size();
+    int i = 0;
+    while (i < n && s1[i] == s2[i]) {
+        i++;
+    }
+    if (i < n && s1[i] > s2[i]) {
+        swap(s1[i], s2[i]);
+    }
+    i++;
+    while (i < n) {
+        if (s1[i] < s2[i]) {
+            swap(s1[i], s2[i]);
+        }
+        i++;
+    }
+    cout << s1 << endl;
+    cout << s2 << endl;
 
 }
 
@@ -43,7 +60,7 @@ signed main() {
     init();
     // debug(1);
     int t = 1;
-//    cin >> t;
+    cin >> t;
     while (t--) {
         solve();
     }
