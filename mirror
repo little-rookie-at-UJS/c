@@ -32,10 +32,14 @@ void init() {
 }
 
 
-void solve() {
+class solution {
+private:
+public:
+    void run() {
 
+    }
+};
 
-}
 
 signed main() {
     IOS;
@@ -44,6 +48,7 @@ signed main() {
     int t = 1;
     cin >> t;
     while (t--) {
-        solve();
+        solution s;
+        s.run();
     }
 }
