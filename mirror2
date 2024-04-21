@@ -13,34 +13,12 @@ using namespace std;
 
 
 #define IOS ios::sync_with_stdio(0),cin.tie(0)
-
-
-namespace test {
-    using ll = long long;
-    using ull = unsigned long long;
-
 #define endl '\n'
 #define int ll
     const int inf = 1e18;
     const int mod = 1e9 + 7;
     template<typename T, typename Compare =less<>>
     using pqinit = priority_queue<T, vector<T>, Compare>;
-
-    void init() {
-
-    }
-
-    class solution {
-    private:
-    public:
-        void run() {
-
-        }
-    };
-
-#undef int
-#undef endl
-};// namespace test
 
 
 signed main() {
