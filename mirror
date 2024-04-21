@@ -26,6 +26,8 @@ namespace test {
     template<typename T, typename Compare =less<>>
     using pqinit = priority_queue<T, vector<T>, Compare>;
 
+    // 全局变量
+
     void init() {
 
     }
