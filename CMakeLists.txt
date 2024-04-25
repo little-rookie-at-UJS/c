@@ -10,3 +10,6 @@ add_executable(gen gen.cpp)
 
 
 add_executable(D ICPC/taipei2021/D.cpp)
+add_executable(MD ICPC/yinchuan2020/MD.cpp)
+add_executable(A ICPC/yinchuan2020/A.cpp)
+add_executable(H ICPC/yinchuan2020/H.cpp)

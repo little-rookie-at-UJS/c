@@ -105,21 +105,19 @@ void solve() {
             int c = rows2[i + k - 1][j] - rows2[i - 1][j];
             int d = lines2[i][j + k - 1] - lines2[i][j - 1];
             debug(a, b, c, d);
-            int sums = lines1[i - 1] +
-                       lines1[n] - lines1[i + k - 1] +
-                       rows1[j - 1] +
-                       rows1[n] - rows1[j + k - 1] +
+            int sums = rows1[i - 1] +
+                       rows1[n] - rows1[i + k - 1] +
+                       lines1[j - 1] +
+                       lines1[n] - lines1[j + k - 1] +
                        +rows2[i + k - 1][j] - rows2[i - 1][j] +
                        lines2[i][j + k - 1] - lines2[i][j - 1];
             maxs = max(sums, maxs);
             debug(i, j, sums);
+//            debug(i, j, sums);
         }
     }
     cout << maxs << endl;
-
-
 }
-
 signed main() {
     IOS;
     init();
