@@ -1,4 +1,4 @@
-  vector<int> ans(n + 1);
+    vector<int> ans(n + 1);
     // 原图
     vector<vector<int>> mp(n + 1);
     vector<int> dfn(n + 1, 0);

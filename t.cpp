@@ -1,168 +1,59 @@
-/*
-
-Author: Haze
-
-2024/4/24
-
-*/
-
 #include <bits/stdc++.h>
-//#include "test.h"
-
-#define IOS ios::sync_with_stdio(false), cin.tie(nullptr);
+#define int long long
 using namespace std;
-using ll = long long;
-#define int ll
-
-#define debugs(x) cerr<<#x<<" "<<x<<endl;
-
-
-void solve() {
-    int n;
-    cin >> n;
-
-    vector<vector<tuple<int, int, int>>> adj(n * 2 + 10);
-    vector<set<int>> ans1(n * 2 + 10);
-    vector<int> arr1(n * 2 + 10);
-    vector<set<int>> ans2(n * 2 + 10);
-    vector<int> arr2(n * 2 + 10);
-    vector<int> vis(n * 2 + 10);
-    vector<int> du(n * 2 + 10);
-
-    for (int i = 1; i <= n; i++) {
-        int u, v, w;
-        cin >> u >> v >> w;
-        adj[u].emplace_back(v, w, i);
-        adj[v].emplace_back(u, w, i);
-        du[u]++;
-        du[v]++;
-        if (u > n)return;
-        if (v > n)return;
+const int N = 20, S = 1 << N;
+int n, q;
+bool rev[N];
+struct segment_tree
+{
+    int o[S << 2];
+    void build(int l, int r, int rt)
+    {
+        if(l == r) { scanf("%lld", &o[rt]); return; }
+        int mid = l + r >> 1;
+        build(l, mid, rt << 1); build(mid + 1, r, rt << 1 | 1);
+        o[rt] = o[rt << 1] + o[rt << 1 | 1];
     }
-    stack<int> st;
-//    debug(du);
-    for (int i = 1; i <= n; i++) {
-        if (du[i] == 1) {
-            st.emplace(i);
-        }
+    void modify(int l, int r, int rt, int dep, int p, int v)
+    {
+        if(l == r) { o[rt] = v; return; }
+        int mid = l + r >> 1;
+        if(p <= mid) modify(l, mid, rt << 1 | rev[dep], dep - 1, p, v);
+        else modify(mid + 1, r, rt << 1 | rev[dep] ^ 1, dep - 1, p, v);
+        o[rt] = o[rt << 1] + o[rt << 1 | 1];
     }
-
-    while (!st.empty()) {
-        auto t = st.top();
-        du[t] = 0;
-//        debug(t);
-        st.pop();
-//        if (i > n)return;
-//        if (id > n)return;
-        if (t > n)return;
-//        vis[t] = 1;
-        for (auto [i, w, id]: adj[t]) {
-            du[i]--;
-
-            if (du[i]) {
-                if (i > n)return;
-                if (id > n)return;
-                if (t > n)return;
-                arr1[id] = t;
-                ans1[t].emplace(1);
-                ans1[i].emplace(w);
-
-                arr2[id] = t;
-                ans2[t].emplace(1);
-                ans2[i].emplace(w) ;
-                if (du[i] == 1)
-                    st.emplace(i);
-            }
-        }
+    int query(int l, int r, int rt, int dep, int ql, int qr)
+    {
+        if(ql <= l && r <= qr) return o[rt];
+        int mid = l + r >> 1, res = 0;
+        if(ql <= mid) res += query(l, mid, rt << 1 | rev[dep], dep - 1, ql, qr);
+        if(qr > mid) res += query(mid + 1, r, rt << 1 | rev[dep] ^ 1, dep - 1, ql, qr);
+        return res;
     }
-//    debug(du);
-    function<void(int, int, int)> dfs = [&](int pre, int now, int be) {
-//        debug(now);
-        if (now > n)return;
-//        vis[now] = 1;
-        for (auto [i, w, id]: adj[now]) {
-            if (du[i] == 0 || i == pre) continue;
-//            cerr << now << " " << i << " " << w << " " << id << endl;
-            if (i > n)return;
-            if (id > n)return;
-//            debug(now, i, id);
-            arr1[id] = now;
-            ans1[now].emplace(1);
-            ans1[i].emplace(w);
-
-            arr2[id] = i;
-            ans2[now].emplace(w);
-            ans2[i].emplace(1);
-            if (i != be) {
-                dfs(now, i, be);
-            }
+} sgt;
+#define Replace(x, k) sgt.modify(1, 1 << n, 1, n, x, k)
+#define Sum(l, r) sgt.query(1, 1 << n, 1, n, l, r)
+#define Swap(k) rev[k + 1] ^= 1
+inline void Reverse(int k) { for(int i = 0; i <= k; i++) rev[i] ^= 1; }
+signed main()
+{
+    scanf("%lld %lld", &n, &q);
+    sgt.build(1, 1 << n, 1);
+    while(q--)
+    {
+        int opt, x, y;
+        scanf("%lld", &opt);
+        switch(opt)
+        {
+            case 1:
+                scanf("%lld %lld", &x, &y); Replace(x, y); break;
+            case 2:
+                scanf("%lld", &x); Reverse(x); break;
+            case 3:
+                scanf("%lld", &x); Swap(x); break;
+            case 4:
+                scanf("%lld %lld", &x, &y); printf("%lld\n", Sum(x, y)); break;
         }
-    };
-
-    for (int i = 1; i <= n; i++) {
-        if (du[i] != 0) {
-            for (auto [j, w, id]: adj[i]) {
-//                debug(i, j);
-                if (j > n) return;
-                if (id > n) return;
-                if (du[j] != 0) {
-                    arr1[id] = i;
-                    ans1[i].emplace(1);
-                    ans1[j].emplace(w);
-
-                    arr2[id] = j;
-                    ans2[i].emplace(w);
-                    ans2[j].emplace(1);
-
-                    dfs(i, j, i);
-//                    debug(i, j);
-//                    return;
-
-                    bool flag = true;
-                    for (int k = 1; k <= n; k++) {
-                        if (ans1[k].size() != adj[k].size()) {
-//                            debugs(k);
-                            flag = false;
-                        }
-                    }
-                    if (flag) {
-                        for (int k = 1; k <= n; k++) {
-                            cout << arr1[k] << endl;
-                        }
-                        return;
-                    }
-
-
-                    flag = true;
-                    for (int k = 1; k <= n; k++) {
-                        if (ans2[k].size() != adj[k].size()) {
-//                            debugs(k);
-                            flag = false;
-                        }
-                    }
-                    if (flag) {
-                        for (int k = 1; k <= n; k++) {
-                            cout << arr2[k] << endl;
-                        }
-                        return;
-                    }
-
-                    cout << "impossible" << endl;
-                    return;
-                }
-            }
-            return;
-        }
-    }
-
-
-}
-
-signed main() {
-//    IOS
-    int T = 1;
-    while (T--) {
-        solve();
     }
     return 0;
 }

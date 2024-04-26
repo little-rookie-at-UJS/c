@@ -3,7 +3,9 @@
 using namespace std;
 
 #ifndef ONLINE_JUDGE
+
 #include "test.h"
+
 #else
 #define debug(...) 42
 #define debug_assert(...) 42
@@ -27,11 +29,10 @@ const int mod = 1e9 + 7;
 void init() {
 }
 
+class seg{
 
+};
 void solve() {
-
-
-
 }
 
 signed main() {
