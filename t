@@ -5,7 +5,6 @@ using BitcoinBlockchain.Data;
 using BitcoinBlockchain.Parser;
 using NBitcoin;
 
-// C:\Users\DELLPC\Desktop\code\qkl\t1\t1\blk00000.dat
 namespace t1
 {
     internal class Program
