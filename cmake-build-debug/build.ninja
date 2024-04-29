@@ -181,11 +181,11 @@ build gen.exe: CXX_EXECUTABLE_LINKER__gen_Debug CMakeFiles/gen.dir/gen.cpp.obj
 
 build cmake_object_order_depends_target_D: phony || CMakeFiles/D.dir
 
-build CMakeFiles/D.dir/ICPC/taipei2021/D.cpp.obj: CXX_COMPILER__D_unscanned_Debug C$:/Users/DELLPC/Desktop/code/c++/ICPC/taipei2021/D.cpp || cmake_object_order_depends_target_D
-  DEP_FILE = CMakeFiles\D.dir\ICPC\taipei2021\D.cpp.obj.d
+build CMakeFiles/D.dir/jscpc2021/D.cpp.obj: CXX_COMPILER__D_unscanned_Debug C$:/Users/DELLPC/Desktop/code/c++/jscpc2021/D.cpp || cmake_object_order_depends_target_D
+  DEP_FILE = CMakeFiles\D.dir\jscpc2021\D.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\D.dir
-  OBJECT_FILE_DIR = CMakeFiles\D.dir\ICPC\taipei2021
+  OBJECT_FILE_DIR = CMakeFiles\D.dir\jscpc2021
 
 
 # =============================================================================
@@ -195,7 +195,7 @@ build CMakeFiles/D.dir/ICPC/taipei2021/D.cpp.obj: CXX_COMPILER__D_unscanned_Debu
 #############################################
 # Link the executable D.exe
 
-build D.exe: CXX_EXECUTABLE_LINKER__D_Debug CMakeFiles/D.dir/ICPC/taipei2021/D.cpp.obj
+build D.exe: CXX_EXECUTABLE_LINKER__D_Debug CMakeFiles/D.dir/jscpc2021/D.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\D.dir
@@ -247,11 +247,11 @@ build MD.exe: CXX_EXECUTABLE_LINKER__MD_Debug CMakeFiles/MD.dir/ICPC/yinchuan202
 
 build cmake_object_order_depends_target_A: phony || CMakeFiles/A.dir
 
-build CMakeFiles/A.dir/ICPC/yinchuan2020/A.cpp.obj: CXX_COMPILER__A_unscanned_Debug C$:/Users/DELLPC/Desktop/code/c++/ICPC/yinchuan2020/A.cpp || cmake_object_order_depends_target_A
-  DEP_FILE = CMakeFiles\A.dir\ICPC\yinchuan2020\A.cpp.obj.d
+build CMakeFiles/A.dir/jscpc2021/A.cpp.obj: CXX_COMPILER__A_unscanned_Debug C$:/Users/DELLPC/Desktop/code/c++/jscpc2021/A.cpp || cmake_object_order_depends_target_A
+  DEP_FILE = CMakeFiles\A.dir\jscpc2021\A.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\A.dir
-  OBJECT_FILE_DIR = CMakeFiles\A.dir\ICPC\yinchuan2020
+  OBJECT_FILE_DIR = CMakeFiles\A.dir\jscpc2021
 
 
 # =============================================================================
@@ -261,7 +261,7 @@ build CMakeFiles/A.dir/ICPC/yinchuan2020/A.cpp.obj: CXX_COMPILER__A_unscanned_De
 #############################################
 # Link the executable A.exe
 
-build A.exe: CXX_EXECUTABLE_LINKER__A_Debug CMakeFiles/A.dir/ICPC/yinchuan2020/A.cpp.obj
+build A.exe: CXX_EXECUTABLE_LINKER__A_Debug CMakeFiles/A.dir/jscpc2021/A.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\A.dir
@@ -280,11 +280,11 @@ build A.exe: CXX_EXECUTABLE_LINKER__A_Debug CMakeFiles/A.dir/ICPC/yinchuan2020/A
 
 build cmake_object_order_depends_target_H: phony || CMakeFiles/H.dir
 
-build CMakeFiles/H.dir/ICPC/yinchuan2020/H.cpp.obj: CXX_COMPILER__H_unscanned_Debug C$:/Users/DELLPC/Desktop/code/c++/ICPC/yinchuan2020/H.cpp || cmake_object_order_depends_target_H
-  DEP_FILE = CMakeFiles\H.dir\ICPC\yinchuan2020\H.cpp.obj.d
+build CMakeFiles/H.dir/jscpc2021/H.cpp.obj: CXX_COMPILER__H_unscanned_Debug C$:/Users/DELLPC/Desktop/code/c++/jscpc2021/H.cpp || cmake_object_order_depends_target_H
+  DEP_FILE = CMakeFiles\H.dir\jscpc2021\H.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\H.dir
-  OBJECT_FILE_DIR = CMakeFiles\H.dir\ICPC\yinchuan2020
+  OBJECT_FILE_DIR = CMakeFiles\H.dir\jscpc2021
 
 
 # =============================================================================
@@ -294,7 +294,7 @@ build CMakeFiles/H.dir/ICPC/yinchuan2020/H.cpp.obj: CXX_COMPILER__H_unscanned_De
 #############################################
 # Link the executable H.exe
 
-build H.exe: CXX_EXECUTABLE_LINKER__H_Debug CMakeFiles/H.dir/ICPC/yinchuan2020/H.cpp.obj
+build H.exe: CXX_EXECUTABLE_LINKER__H_Debug CMakeFiles/H.dir/jscpc2021/H.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\H.dir
@@ -303,6 +303,138 @@ build H.exe: CXX_EXECUTABLE_LINKER__H_Debug CMakeFiles/H.dir/ICPC/yinchuan2020/H
   TARGET_FILE = H.exe
   TARGET_IMPLIB = libH.dll.a
   TARGET_PDB = H.exe.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target I
+
+
+#############################################
+# Order-only phony target for I
+
+build cmake_object_order_depends_target_I: phony || CMakeFiles/I.dir
+
+build CMakeFiles/I.dir/jscpc2021/I.cpp.obj: CXX_COMPILER__I_unscanned_Debug C$:/Users/DELLPC/Desktop/code/c++/jscpc2021/I.cpp || cmake_object_order_depends_target_I
+  DEP_FILE = CMakeFiles\I.dir\jscpc2021\I.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\I.dir
+  OBJECT_FILE_DIR = CMakeFiles\I.dir\jscpc2021
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target I
+
+
+#############################################
+# Link the executable I.exe
+
+build I.exe: CXX_EXECUTABLE_LINKER__I_Debug CMakeFiles/I.dir/jscpc2021/I.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\I.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = I.exe
+  TARGET_IMPLIB = libI.dll.a
+  TARGET_PDB = I.exe.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target J
+
+
+#############################################
+# Order-only phony target for J
+
+build cmake_object_order_depends_target_J: phony || CMakeFiles/J.dir
+
+build CMakeFiles/J.dir/jscpc2021/J.cpp.obj: CXX_COMPILER__J_unscanned_Debug C$:/Users/DELLPC/Desktop/code/c++/jscpc2021/J.cpp || cmake_object_order_depends_target_J
+  DEP_FILE = CMakeFiles\J.dir\jscpc2021\J.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\J.dir
+  OBJECT_FILE_DIR = CMakeFiles\J.dir\jscpc2021
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target J
+
+
+#############################################
+# Link the executable J.exe
+
+build J.exe: CXX_EXECUTABLE_LINKER__J_Debug CMakeFiles/J.dir/jscpc2021/J.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\J.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = J.exe
+  TARGET_IMPLIB = libJ.dll.a
+  TARGET_PDB = J.exe.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target JJ
+
+
+#############################################
+# Order-only phony target for JJ
+
+build cmake_object_order_depends_target_JJ: phony || CMakeFiles/JJ.dir
+
+build CMakeFiles/JJ.dir/jscpc2021/JJ.cpp.obj: CXX_COMPILER__JJ_unscanned_Debug C$:/Users/DELLPC/Desktop/code/c++/jscpc2021/JJ.cpp || cmake_object_order_depends_target_JJ
+  DEP_FILE = CMakeFiles\JJ.dir\jscpc2021\JJ.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\JJ.dir
+  OBJECT_FILE_DIR = CMakeFiles\JJ.dir\jscpc2021
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target JJ
+
+
+#############################################
+# Link the executable JJ.exe
+
+build JJ.exe: CXX_EXECUTABLE_LINKER__JJ_Debug CMakeFiles/JJ.dir/jscpc2021/JJ.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\JJ.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = JJ.exe
+  TARGET_IMPLIB = libJJ.dll.a
+  TARGET_PDB = JJ.exe.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target C
+
+
+#############################################
+# Order-only phony target for C
+
+build cmake_object_order_depends_target_C: phony || CMakeFiles/C.dir
+
+build CMakeFiles/C.dir/jscpc2021/C.cpp.obj: CXX_COMPILER__C_unscanned_Debug C$:/Users/DELLPC/Desktop/code/c++/jscpc2021/C.cpp || cmake_object_order_depends_target_C
+  DEP_FILE = CMakeFiles\C.dir\jscpc2021\C.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\C.dir
+  OBJECT_FILE_DIR = CMakeFiles\C.dir\jscpc2021
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target C
+
+
+#############################################
+# Link the executable C.exe
+
+build C.exe: CXX_EXECUTABLE_LINKER__C_Debug CMakeFiles/C.dir/jscpc2021/C.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\C.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = C.exe
+  TARGET_IMPLIB = libC.dll.a
+  TARGET_PDB = C.exe.dbg
 
 
 #############################################
@@ -332,9 +464,17 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 build A: phony A.exe
 
+build C: phony C.exe
+
 build D: phony D.exe
 
 build H: phony H.exe
+
+build I: phony I.exe
+
+build J: phony J.exe
+
+build JJ: phony JJ.exe
 
 build MD: phony MD.exe
 
@@ -354,7 +494,7 @@ build t: phony t.exe
 #############################################
 # Folder: C:/Users/DELLPC/Desktop/code/c++/cmake-build-debug
 
-build all: phony cdc.exe t.exe dp.exe gen.exe D.exe MD.exe A.exe H.exe
+build all: phony cdc.exe t.exe dp.exe gen.exe D.exe MD.exe A.exe H.exe I.exe J.exe JJ.exe C.exe
 
 # =============================================================================
 # Built-in targets

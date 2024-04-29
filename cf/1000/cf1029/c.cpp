@@ -46,26 +46,26 @@ node ands(node &n1, node &n2) {
 void solve() {
     int n;
     cin >> n;
-    vector<node> arr(n + 1);
+    vector<int> arr(n + 1), ans(n + 1);
     for (int i = 1; i <= n; i++) {
-        cin >> arr[i].l >> arr[i].r;
+        cin >> arr[i];
     }
-    vector<node> pre(n + 1);
-    vector<node> end(n + 1);
-    pre[1] = arr[1];
+    int mins = -1;
+
+    ans[1] = 1;
     for (int i = 2; i <= n; i++) {
-        pre[i] = ands(pre[i - 1], arr[i]);
+        ans[i] = min(arr[i], ans[i - 1] + 1);
+
     }
-    end[n] = arr[n];
+    ans[n] = 1;
     for (int i = n - 1; i; i--) {
-        end[i] = ands(end[i + 1], arr[i]);
+        ans[i] = min({ans[i], ans[i + 1] + 1});
     }
-    int ans1 = max(pre[n - 1].r - pre[n - 1].l, end[2].r - end[2].l);
-    for (int i = 2; i < n; i++) {
-        node nn = ands(pre[i - 1], end[i + 1]);
-        ans1 = max(ans1, nn.r - nn.l);
+    for (int i = 1; i <= n; i++) {
+        mins = max(mins, ans[i]);
     }
-    cout << ans1 << endl;
+    debug(ans);
+    cout << mins << endl;
 }
 
 signed main() {

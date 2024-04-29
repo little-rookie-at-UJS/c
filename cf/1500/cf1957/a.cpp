@@ -31,7 +31,21 @@ void init() {
 
 
 void solve() {
+    int n;
+    cin >> n;
+    map<int, int> ans;
+    for (int i = 1; i <= n; i++) {
+        int x;
+        cin >> x;
+        ans[x]++;
+    }
+    int sums = 0;
+    for (auto [_, j]: ans) {
+        sums += j / 3;
+    }
+    cout<<sums<<endl;
 }
+
 signed main() {
     IOS;
     init();

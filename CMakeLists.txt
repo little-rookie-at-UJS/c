@@ -9,7 +9,12 @@ add_executable(dp dp.cpp)
 add_executable(gen gen.cpp)
 
 
-add_executable(D ICPC/taipei2021/D.cpp)
+add_executable(D jscpc2021/D.cpp)
 add_executable(MD ICPC/yinchuan2020/MD.cpp)
-add_executable(A ICPC/yinchuan2020/A.cpp)
-add_executable(H ICPC/yinchuan2020/H.cpp)
+add_executable(A jscpc2021/A.cpp)
+add_executable(H jscpc2021/H.cpp)
+
+add_executable(I jscpc2021/I.cpp)
+add_executable(J jscpc2021/J.cpp)
+add_executable(JJ jscpc2021/JJ.cpp)
+add_executable(C jscpc2021/C.cpp)

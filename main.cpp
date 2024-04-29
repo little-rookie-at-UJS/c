@@ -16,117 +16,128 @@ using namespace std;
 
 using ll = long long;
 using ull = unsigned long long;
-
-#define endl '\n'
 #define int ll
-
+#define endl '\n'
 using VI = vector<int>;
 using VII = vector<VI>;
 using PII = pair<int, int>;
-const int inf = 1e18;
 const int mod = 1e9 + 7;
+
+struct node {
+    int link, len;
+    map<char, int> next;
+
+    node() {
+        next.clear();
+        link = len = 0;
+    }
+};
+
+struct SAM {
+    int las, tot;
+    vector<node> st;
+    int cnt = 0;
+    vector<int> sums, siz;
+
+    SAM(int n) {
+        st.resize(2 * n + 10);
+        sums.resize(2 * n + 10, 1);
+        // len.resize(2 * n + 10, 0);
+        siz.resize(2 * n + 10, 0);
+        las = 1, tot = 2;
+    }
+
+    string getmin() {
+        string s;
+        int lass = 1;
+
+        while (1) {
+            if (st[lass].next.empty())return s;
+            for (auto [i, j]: st[lass].next) {
+                s.push_back(i);
+                lass = j;
+                break;
+            }
+        }
+        return s;
+    }
+
+    void insert(char c) {
+        int p = las;
+        int newnode = tot++;
+        siz[newnode] = 1;
+        las = newnode;
+        st[newnode].len = st[p].len + 1;
+        while (p && !(st[p].next.count(c))) {
+            st[p].next[c] = newnode;
+            p = st[p].link;
+        }
+        if (!p) {
+            st[newnode].link = 1;
+        } else {
+            int q = st[p].next[c];
+            if (st[q].len == st[p].len + 1) {
+                st[newnode].link = q;
+            } else {
+                int nq = tot++;
+                st[nq] = st[q];
+                st[nq].len = st[p].len + 1;
+                while (p && st[p].next[c] == q) {
+                    st[p].next[c] = nq;
+                    p = st[p].link;
+                }
+                st[q].link = st[newnode].link = nq;
+            }
+        }
+        cnt += st[las].len - st[st[las].link].len;
+    }
+
+
+};
+
 
 void init() {
 }
 
 
 void solve() {
-    int n, k;
-    cin >> n >> k;
     string s;
-    vector<vector<int>> mp(n + 1, vector<int>(n + 1));
+    cin >> s;
+    int n = s.length();
+    s = " " + s + " ";
+    SAM sam(s.length() + 3);
+    vector<char> mins(s.length() + 3, 'z' + 1);
+    for (int i = s.length() - 2; i; i--) {
+        mins[i] = min(s[i], mins[i + 1]);
+    };
+    int las = n + 1;
     for (int i = 1; i <= n; i++) {
-        cin >> s;
-        for (int j = 1; j <= n; j++) {
-            mp[i][j] = s[j - 1] == 'B';
+        if (s[i] > mins[i])las = min(las, i);
+    }
+    string s1 = s.substr(1, las - 1);
+    string s2 = s.substr(las, n + 2 - las);
+    string s3 = s2;
+    reverse(s3.begin(), s3.end());
+    for (auto i: s3) {
+        if (i != ' ') {
+            sam.insert(i);
         }
     }
-    vector<vector<int>> rows(n + 1, vector<int>(n + 1));
-    vector<vector<int>> lines(n + 1, vector<int>(n + 1));
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            rows[i][j] = mp[i][j] + rows[i][j - 1];
-            lines[i][j] = mp[i][j] + lines[i - 1][j];
-        }
-    }
-//    debug(rows);
-//    debug(lines);
-    vector<int> rows1(n + 1), lines1(n + 1);
-    for (int i = 1; i <= n; i++) {
-        if (rows[i][n] == 0) rows1[i]++;
-        if (lines[n][i] == 0) lines1[i]++;
-    }
-    for (int i = 1; i <= n; i++) {
-        rows1[i] += rows1[i - 1];
-        lines1[i] += lines1[i - 1];
-    }
-//    debug(rows1);
-//    debug(lines1);
-    vector<vector<int>> rows2(n + 1, vector<int>(n + 1));
-    vector<vector<int>> lines2(n + 1, vector<int>(n + 1));
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            if (j + k - 1 <= n) {
-                // 对于第i行
-                int sums = 0;
-                // j  - j + k - 1
-                sums += rows[i][j - 1] + rows[i][n] - rows[i][j + k - 1];
-                if (!sums) {
-                    rows2[i][j] = 1;
-                }
-            }
-            if (i + k - 1 <= n) {
-                int sums = 0;
-                // i - i+k-1
-                sums = lines[i - 1][j] + lines[n][j] - lines[i + k - 1][j];
-                if (!sums) {
-                    lines2[i][j] = 1;
-                }
-            }
 
-        }
-    }
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            rows2[i][j] += rows2[i - 1][j];
-            lines2[i][j] += lines2[i][j - 1];
-        }
-    }
-//    debug(rows2);
-//    debug(lines2);
-    int maxs = 0;
-    for (int i = 1; i <= n - k + 1; i++) {
-        for (int j = 1; j <= n - k + 1; j++) {
-            //  i - i+k - 1
-            int a = lines1[i - 1] +
-                    lines1[n] - lines1[i + k - 1];
-            int b = rows1[j - 1] +
-                    rows1[n] - rows1[j + k - 1];
-            int c = rows2[i + k - 1][j] - rows2[i - 1][j];
-            int d = lines2[i][j + k - 1] - lines2[i][j - 1];
-            debug(a, b, c, d);
-            int sums = lines1[i - 1] +
-                       lines1[n] - lines1[i + k - 1] +
-                       rows1[j - 1] +
-                       rows1[n] - rows1[j + k - 1] +
-                       +rows2[i + k - 1][j] - rows2[i - 1][j] +
-                       lines2[i][j + k - 1] - lines2[i][j - 1];
-            maxs = max(sums, maxs);
-            debug(i, j, sums);
-        }
-    }
-    cout << maxs << endl;
-
-
+    string s4 = sam.getmin();
+    string s5 = s2.substr(s4.size(), s2.size() - s4.size() - 1);
+//    debug(s1, s4, s5);
+    cout << s1 << s4 << s5 << endl;
 }
 
 signed main() {
-    IOS;
+    // IOS;
     init();
-    // debug(1);
+
     int t = 1;
-//    cin >> t;
+    cin >> t;
     while (t--) {
         solve();
     }
 }
+

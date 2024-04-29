@@ -31,7 +31,27 @@ void init() {
 
 
 void solve() {
+
+    int n, k;
+    cin >> n >> k;
+    if (n == 1) {
+        cout << k << endl;
+        return;
+    }
+    int now = 1;
+    int first = 0;
+    while (first + now < k) {
+        first = first + now;
+        now *= 2;
+        debug(now);
+    }
+    cout << first << " " << k - first << " ";
+    for (int i = 3; i <= n; i++) {
+        cout << "0 " ;
+    }
+    cout << endl;
 }
+
 signed main() {
     IOS;
     init();
