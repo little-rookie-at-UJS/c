@@ -29,7 +29,6 @@ namespace strhash {
                 h[i] = (now1 << 32) | now2;
             }
         }
-
         u64 get(int l, int r) {
             int len = r - l;
             u64 l1 = h[l] >> 32, r1 = h[r] >> 32;
