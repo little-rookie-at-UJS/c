@@ -10,10 +10,13 @@ int main() {
     std::mt19937 rng(time(0));
     int k = 1;
     cout << k << endl;
-    int n = 50;
+    while (k--) {
+        int n = 2000000;
 
-    for (int i = 1; i <= n; i++) {
-        char c = 'a' + rng() % 2;
-        cout << c ;
+        for (int i = 1; i <= n; i++) {
+            char c = 'a' + rng() % 20;
+            cout << c;
+        }
+        cout << endl;
     }
 }

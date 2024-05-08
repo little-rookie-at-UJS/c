@@ -1,5 +1,4 @@
 
-
 namespace strhash {
     using u64 = uint64_t;
     mt19937_64 rng(random_device{}());
