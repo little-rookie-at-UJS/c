@@ -22,7 +22,7 @@ void solve(){
 //cout<<i<<" ";
     }
     //cout<<endl;
-    if(!first[n-1]){
+    if(!first[n-1]){d4
         cout<<"NO"<<endl;
         return;
     }

@@ -1,143 +1,213 @@
+//
+// Created by DELLPC on 24-5-19.
+//
 #include "bits/stdc++.h"
 
 using namespace std;
 
-#ifndef ONLINE_JUDGE
+using i64 = long long;
+using i32 = unsigned int;
 
-#include "test.h"
+#define  endl '\n'
 
-#else
-#define debug(...) 42
-#define debug_assert(...) 42
-#endif
+struct cmp {
+    int pos;
+    int left;
+
+    bool operator<(const cmp &a) const {
+        if (pos == a.pos) {
+            return left > a.left;
+        }
+        return pos < a.pos;
+    }
+
+    cmp(int pos, int left) : pos(pos), left(left) {}
+
+};
+
+// 线段树
+
+class STG {
+private:
 
 
-#define IOS ios::sync_with_stdio(0),cin.tie(0)
+    vector<int> stg;
+    vector<int> ys;
+    vector<int> v;
+    int n;
 
-using ll = long long;
-using ull = unsigned long long;
-#define int ll
-#define endl '\n'
-using VI = vector<int>;
-using VII = vector<VI>;
-using PII = pair<int, int>;
-const int mod = 1e9 + 7;
+
+    void pushup(int q) {
+        stg[q] = max(stg[q << 1], stg[q << 1 | 1]);
+    }
+
+    void build(int q, int l, int r) {
+        if (l == r) {
+            stg[q] = v[l];
+            return;
+        }
+        int mid = (l + r) / 2;
+        build(q << 1, l, mid);
+        build(q << 1 | 1, mid + 1, r);
+        pushup(q);
+    }
+
+    cmp query(int q, int l, int r, int L, int R, int K) {
+        int mid = (l + r) / 2;
+        if (L <= l && r <= R) {
+            if (stg[q] < K) return cmp(1e9, -1);
+            if (l == r) {
+                return {l, stg[q]};
+            }
+            if (stg[q << 1] >= K) return query(q << 1, l, mid, L, R, K);
+            else return query(q << 1 | 1, mid + 1, r, L, R, K);
+        }
+        if (l > R || r < L) return cmp(1e9, -1);
+        cmp ans = cmp(1e9, -1);
+
+        if (L <= mid) {
+            ans = min(query(q << 1, l, mid, L, R, K), ans);
+        }
+        if (R > mid) {
+            ans = min(query(q << 1 | 1, mid + 1, r, L, R, K), ans);
+        }
+        return ans;
+    }
+
+public:
+    STG() {
+        n = 0;
+        ys.emplace_back(0);
+        v.emplace_back(0);
+    }
+
+    void emplace(int x, int va) {
+//        cerr << x << " " << va << endl;
+        ys.push_back(x);
+        v.push_back(va);
+        n++;
+    }
+
+    void build() {
+        stg.resize(n * 4);
+        build(1, 1, n);
+    }
+
+    auto query(int x, int k) {
+        auto r = std::lower_bound(ys.begin(), ys.end(), x);
+        if (r == ys.end())return cmp(1e9, -1);
+        auto ans = query(1, 1, n, r - ys.begin(), n, k);
+        if (ans.pos != 1e9)
+            ans.pos = ys[ans.pos];
+        return ans;
+    }
+
+
+};
 
 struct node {
-    int link, len;
-    map<char, int> next;
+    // 位置
+    int pos;
+    int left;
+    int goal;
 
-    node() {
-        next.clear();
-        link = len = 0;
-    }
-};
-
-struct SAM {
-    int las, tot;
-    vector<node> st;
-    int cnt = 0;
-    vector<int> sums, siz;
-
-    SAM(int n) {
-        st.resize(2 * n + 10);
-        sums.resize(2 * n + 10, 1);
-        // len.resize(2 * n + 10, 0);
-        siz.resize(2 * n + 10, 0);
-        las = 1, tot = 2;
-    }
-
-    string getmin() {
-        string s;
-        int lass = 1;
-
-        while (1) {
-            if (st[lass].next.empty())return s;
-            for (auto [i, j]: st[lass].next) {
-                s.push_back(i);
-                lass = j;
-                break;
-            }
+    bool operator<(const node &a) const {
+        if (pos == a.pos) {
+            return left > a.left;
         }
-        return s;
+        return pos < a.pos;
     }
 
-    void insert(char c) {
-        int p = las;
-        int newnode = tot++;
-        siz[newnode] = 1;
-        las = newnode;
-        st[newnode].len = st[p].len + 1;
-        while (p && !(st[p].next.count(c))) {
-            st[p].next[c] = newnode;
-            p = st[p].link;
+    bool operator>(const node &a) const {
+        if (pos == a.pos) {
+            return left < a.left;
         }
-        if (!p) {
-            st[newnode].link = 1;
-        } else {
-            int q = st[p].next[c];
-            if (st[q].len == st[p].len + 1) {
-                st[newnode].link = q;
-            } else {
-                int nq = tot++;
-                st[nq] = st[q];
-                st[nq].len = st[p].len + 1;
-                while (p && st[p].next[c] == q) {
-                    st[p].next[c] = nq;
-                    p = st[p].link;
-                }
-                st[q].link = st[newnode].link = nq;
-            }
-        }
-        cnt += st[las].len - st[st[las].link].len;
+        return pos > a.pos;
     }
-
 
 };
-
-
-void init() {
-}
 
 
 void solve() {
-    string s;
-    cin >> s;
-    int n = s.length();
-    s = " " + s + " ";
-    SAM sam(s.length() + 3);
-    vector<char> mins(s.length() + 3, 'z' + 1);
-    for (int i = s.length() - 2; i; i--) {
-        mins[i] = min(s[i], mins[i + 1]);
-    };
-    int las = n + 1;
-    for (int i = 1; i <= n; i++) {
-        if (s[i] > mins[i])las = min(las, i);
+    int n, m, k;
+    cin >> n >> m >> k;
+//    cerr << n << " " << m << " " << k << endl;
+    vector<vector<tuple<int, int, int >>> adj(n + 1);
+    for (int i = 1; i <= m; i++) {
+        int u, v, kk, a;
+        cin >> u >> v >> kk >> a;
+        adj[u].emplace_back(v, kk, a);
     }
-    string s1 = s.substr(1, las - 1);
-    string s2 = s.substr(las, n + 2 - las);
-    string s3 = s2;
-    reverse(s3.begin(), s3.end());
-    for (auto i: s3) {
-        if (i != ' ') {
-            sam.insert(i);
+    map<int, STG *> mp;
+    vector<int> col(k + 1);
+    for (int i = 1; i <= k; i++) {
+        int c, l;
+        cin >> c >> l;
+        col[i] = c;
+        if (!mp.count(c)) {
+            mp[c] = new STG();
+        }
+//        cerr << c << " " << l << endl;
+        mp[c]->emplace(i, l);
+    }
+
+    for (auto &i: mp) {
+        i.second->build();
+    }
+    priority_queue<node, vector<node>, greater<>> pq;
+    pq.emplace(0, 0, 1);
+
+    vector<cmp> dis(n + 1, cmp(1e9, 1e9));
+    vector<int> vis(n + 1);
+
+
+    dis[1] = {0, 0};
+    while (!pq.empty()) {
+        auto [pos, left, now] = pq.top();
+        pq.pop();
+        if (vis[now])continue;
+        vis[now] = 1;
+        for (auto [to, colorned, cost]: adj[now]) {
+
+            if (colorned == col[pos] && cost <= left) {
+                cmp ans = {dis[now].pos, left - cost};
+                if (ans < dis[to]) {
+//                    cerr << "update " << now << " " << to << " " << ans.pos << " " << ans.left << endl;
+                    dis[to] = ans;
+                    pq.emplace(to, left - cost, to);
+                }
+            } else {
+                if (mp.count(colorned)) {
+                    auto ans = mp[colorned]->query(pos + 1, cost);
+                    if (ans.pos != 1e9) {
+                        ans.left -= cost;
+                        if (ans < dis[to]) {
+
+                            dis[to] = ans;
+                            pq.emplace(ans.pos, ans.left, to);
+                        }
+                    }
+
+                }
+            }
         }
     }
+    for (int i = 1; i <= n; i++) {
+        if (vis[i])cout << 1;
+        else cout << 0;
+    }
+    cout << endl;
 
-    string s4 = sam.getmin();
-    string s5 = s2.substr(s4.size(), s2.size() - s4.size() - 1);
-//    debug(s1, s4, s5);
-    cout << s1 << s4 << s5 << endl;
+
 }
 
-signed main() {
-    // IOS;
-    init();
-
-    int t = 1;
+int main() {
+    ios::sync_with_stdio(0), cin.tie(0);
+    int t;
     cin >> t;
     while (t--) {
         solve();
     }
 }
+
 

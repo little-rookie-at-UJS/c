@@ -8,15 +8,24 @@ using namespace std;
 
 int main() {
     std::mt19937 rng(time(0));
-    int k = 1;
-    cout << k << endl;
-    while (k--) {
-        int n = 2000000;
+//    int n;
+//    cin >> n
+    cout << 1 << endl;
+    int n = rng() %10000+1;
+    int m = rng()%100000+1;
+    int k = rng()%100000+1;
 
-        for (int i = 1; i <= n; i++) {
-            char c = 'a' + rng() % 20;
-            cout << c;
-        }
-        cout << endl;
+    cout << n << " " << m << " " << k << endl;
+
+    for(int i = 1; i <= m; i++) {
+        cout << rng() % 5 + 1 << " " << rng() % n + 1
+        << " " << rng() % k + 1 << " " << rng() % 10 + 1 << endl;
     }
+
+
+    for(int i = 1; i <= k; i++) {
+        cout << rng() % k + 1 << " " << rng() % 10 + 1 << endl;
+    }
+
+
 }
